@@ -1,9 +1,18 @@
+
 <!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Uşaq Psixologiyası Əsaslı Oyun Platforması (Tam PRD Versiyası)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Uşaq İnteraktiv Ada Platforması</title>
+    
+    <!-- PWA & Mobile App Meta Tag-ləri -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#26a69a">
+    <link rel="manifest" href="data:application/json;base64,ewogICJuYW1lIjogIlV3YXEgaW50ZXJha3RpdiBBZGEiLAogICJzaG9ydF9uYW1lIjogIkFkYSBBcHAiLAogICJzdGFydF91cmwiOiAiLi8iLAogICJkaXNwbGF5IjogInN0YW5kYWxvbmUiLAogICJiYWNrZ3JvdW5kX2NvbG9yIjogIiNlMGY3ZmEiLAogICJ0aGVtZV9jb2xvcjogIiMyNmE2OWEiLAogICJpY29ucyI6IFt7CiAgICAic3JjIjogImh0dHBzOi8vY2RuLWljb25zLXBuZy5mbGF0aWNvbi5jb20vNTEyLzg2OS84Njk2MzYucG5nIiwKICAgICJzaXplcyI6ICI1MTJ4NTEyIiwKICAgICJ0eXBlIjogImltYWdlL3BuZyIKICB9XQp9">
+
     <style>
         :root {
             --primary: #26a69a;
@@ -12,45 +21,50 @@
             --card-bg: #ffffff;
             --text-color: #333;
         }
-        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; }
-        body { background: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 10px; }
-        .app-container { width: 100%; max-width: 420px; height: 800px; background: var(--card-bg); border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); overflow-y: auto; position: relative; border: 8px solid #00695c; display: flex; flex-direction: column; justify-content: space-between; }
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; user-select: none; }
+        body { background: var(--bg-color); color: var(--text-color); display: flex; justify-content: center; align-items: center; min-height: 100vh; overflow: hidden; }
+        .app-container { width: 100%; max-width: 450px; height: 100vh; max-height: 900px; background: var(--card-bg); overflow-y: auto; position: relative; display: flex; flex-direction: column; justify-content: space-between; }
         .screen { display: none; padding: 20px; flex-direction: column; height: 100%; overflow-y: auto; }
         .active { display: flex; }
         h1, h2, h3 { color: #00695c; margin-bottom: 10px; text-align: center; }
         p { font-size: 14px; color: #555; margin-bottom: 10px; }
-        .btn { background: var(--secondary); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; font-size: 15px; cursor: pointer; text-align: center; margin: 8px 0; width: 100%; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .btn:hover { background: #f4511e; }
+        .btn { background: var(--secondary); color: white; border: none; padding: 14px; border-radius: 14px; font-weight: bold; font-size: 16px; cursor: pointer; text-align: center; margin: 8px 0; width: 100%; box-shadow: 0 4px 8px rgba(0,0,0,0.12); }
+        .btn:active { transform: scale(0.98); }
         .btn-alt { background: #00897b; }
         .btn-safety { background: #e53935; }
-        input, select { width: 100%; padding: 10px; margin: 6px 0; border: 2px solid #b2dfdb; border-radius: 10px; font-size: 14px; }
-        .top-bar { display: flex; justify-content: space-between; background: #e0f2f1; padding: 10px; border-radius: 10px; margin-bottom: 15px; font-weight: bold; font-size: 13px; }
-        .card { background: #f1f8e9; border: 2px solid #aed581; border-radius: 12px; padding: 12px; margin-bottom: 10px; }
-        .char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 10px 0; }
-        .char-card { background: #f1f8e9; border: 2px solid #aed581; border-radius: 12px; padding: 10px; text-align: center; cursor: pointer; }
+        input, select { width: 100%; padding: 12px; margin: 6px 0; border: 2px solid #b2dfdb; border-radius: 12px; font-size: 15px; outline: none; }
+        .top-bar { display: flex; justify-content: space-between; background: #e0f2f1; padding: 12px; border-radius: 12px; margin-bottom: 15px; font-weight: bold; font-size: 14px; }
+        .card { background: #f1f8e9; border: 2px solid #aed581; border-radius: 14px; padding: 14px; margin-bottom: 12px; }
+        .char-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 10px 0; }
+        .char-card { background: #f1f8e9; border: 2px solid #aed581; border-radius: 14px; padding: 12px; text-align: center; cursor: pointer; }
         .char-card.selected { border-color: var(--secondary); background: #ffe0b2; }
-        .zone-item { background: white; border-left: 5px solid var(--primary); padding: 10px; border-radius: 8px; margin-bottom: 8px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 100; }
-        .modal-content { background: white; padding: 20px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; }
+        .zone-item { background: white; border-left: 6px solid var(--primary); padding: 14px; border-radius: 10px; margin-bottom: 10px; cursor: pointer; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.06); }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 100; }
+        .modal-content { background: white; padding: 22px; border-radius: 18px; width: 88%; max-width: 360px; text-align: center; }
+        .pwa-banner { background: #fff8e1; border: 2px dashed #ffb300; padding: 10px; border-radius: 12px; text-align: center; margin-bottom: 15px; font-size: 13px; }
     </style>
 </head>
 <body>
 
 <div class="app-container">
 
-    <!-- 1. ONBOARDING & SAFETY AGREEMENT (Təhlükəsizlik və Qeydiyyat) -->
+    <!-- EKRAN 1: QEYDİYYAT & SAFETY -->
     <div id="screen-onboarding" class="screen active">
         <div>
             <h1>🏝️ İnteraktiv Ada</h1>
-            <p>Uşaq Psixologiyası və Gamified Well-being Platformasına Xoş Gəlmisiniz.</p>
+            <p style="text-align: center;">Uşaq Psixologiyası və Gamified Well-being Platforması</p>
             
+            <div class="pwa-banner">
+                📱 <strong>Mobil Tətbiq Kimi Yüklə:</strong><br>Brauzerin menyusundan (⋮ və ya Share) <strong>"Ana ekrana əlavə et" (Add to Home Screen)</strong> seçin!
+            </div>
+
             <div class="card" style="background:#fff3e0; border-color:#ffb74d;">
                 <strong>🛡️ Safety & Privacy First:</strong><br>
-                <small>Məlumatlarınız şifrələnir. Valideyn nəzarəti aktivdir.</small>
+                <small>Bütün məlumatlar şifrələnir. Valideyn nəzarət sistemi aktivdir.</small>
             </div>
 
             <label>Adınız / Ləqəbiniz:</label>
-            <input type="text" id="reg-name" placeholder="Məsələn: Ayxan">
+            <input type="text" id="reg-name" placeholder="Məsələn: Əli">
 
             <label>Yaş Qrupunuz:</label>
             <select id="reg-age">
@@ -64,30 +78,30 @@
         </div>
     </div>
 
-    <!-- 2. CHARACTER SELECTION (Virtual Bələdçi Seçimi) -->
+    <!-- EKRAN 2: PERSONAJ SEÇİMİ -->
     <div id="screen-character" class="screen">
         <div>
             <h2>Virtual Yoldaşını Seç</h2>
-            <p>Sənə adada bələdçilik edəcək AI dostunu müəyyənləşdir:</p>
+            <p style="text-align: center;">Bələdçi AI dostunu seç:</p>
             <div class="char-grid">
-                <div class="char-card" onclick="selectChar('Panda', '🐼', 'Sakitlik')">
-                    <span style="font-size:30px">🐼</span><br><strong>Panda</strong><br><small>Nəfəs və Sakitlik</small>
+                <div class="char-card" onclick="selectChar('Panda', '🐼')">
+                    <span style="font-size:36px">🐼</span><br><strong>Panda</strong><br><small>Nəfəs & Sakitlik</small>
                 </div>
-                <div class="char-card" onclick="selectChar('Tülkü', '🦊', 'Məntiq')">
-                    <span style="font-size:30px">🦊</span><br><strong>Tülkü</strong><br><small>İdrak & Diqqət</small>
+                <div class="char-card" onclick="selectChar('Tülkü', '🦊')">
+                    <span style="font-size:36px">🦊</span><br><strong>Tülkü</strong><br><small>İdrak & Diqqət</small>
                 </div>
-                <div class="char-card" onclick="selectChar('Dovşan', '🐰', 'Enerji')">
-                    <span style="font-size:30px">🐰</span><br><strong>Dovşan</strong><br><small>Emosional İfadə</small>
+                <div class="char-card" onclick="selectChar('Dovşan', '🐰')">
+                    <span style="font-size:36px">🐰</span><br><strong>Dovşan</strong><br><small>Emosiya & Şən</small>
                 </div>
-                <div class="char-card" onclick="selectChar('Ayı', '🐻', 'Cəsarət')">
-                    <span style="font-size:30px">🐻</span><br><strong>Ayı</strong><br><small>Qorxularla Mübarizə</small>
+                <div class="char-card" onclick="selectChar('Ayı', '🐻')">
+                    <span style="font-size:36px">🐻</span><br><strong>Ayı</strong><br><small>Cəsarət & Qoruyucu</small>
                 </div>
             </div>
         </div>
         <button class="btn" onclick="startIsland()">Adaya Daxil Ol 🌴</button>
     </div>
 
-    <!-- 3. MAIN ISLAND HUB (Əsas Ada Ekranı) -->
+    <!-- EKRAN 3: ƏSAS ADA İNTERFEYSİ -->
     <div id="screen-island" class="screen">
         <div>
             <div class="top-bar">
@@ -97,75 +111,65 @@
             </div>
 
             <div class="card" style="text-align:center; background:linear-gradient(135deg, #81d4fa, #a5d6a7);">
-                <span id="active-avatar" style="font-size:50px;">🐼</span>
+                <span id="active-avatar" style="font-size:55px;">🐼</span>
                 <h3 id="island-title">Ada Mərkəzi</h3>
-                <p id="ai-dialogue">"Salam! Bu gün hansı zonada inkişaf edək?"</p>
+                <p id="ai-dialogue">"Bu gün hansı zonaya gedirik?"</p>
             </div>
 
-            <h3>🗺️ Ada Zonaları (GDD)</h3>
-            <div class="zone-item" onclick="openZone('Sakitlik Gölü', '4-2-4 tənəffüs texnikası ilə stressi azaldırıq.')">🌊 Sakitlik Gölü (Nəfəs & Meditasiya)</div>
-            <div class="zone-item" onclick="openZone('İdrak Mərkəzi', 'Yaddaş və diqqət gücləndirici tapşırıqlar.')">⛰️ İdrak & Diqqət Zonası</div>
-            <div class="zone-item" onclick="openZone('Empatiya Bağı', 'Emosiyaları tanıma və idarəetmə ssenariləri.')">🌸 Empatiya Bağı</div>
-            <div class="zone-item" onclick="openZone('Hikmət Kitabxanası', 'Psixoloji maarifləndirici videolar və hekayələr.')">📚 Hikmət Kitabxanası</div>
+            <h3>🗺️ Ada Zonaları</h3>
+            <div class="zone-item" onclick="openZone('Sakitlik Gölü', '4-2-4 nəfəs texnikası başladı!')">🌊 Sakitlik Gölü (Nəfəs Oyunu)</div>
+            <div class="zone-item" onclick="openZone('İdrak Mərkəzi', 'Yaddaş və diqqət tapşırığı!')">⛰️ İdrak & Diqqət Zonası</div>
+            <div class="zone-item" onclick="openZone('Empatiya Bağı', 'Emosiyaları tanıma simulyasiyası!')">🌸 Empatiya Bağı</div>
+            <div class="zone-item" onclick="openZone('Hikmət Kitabxanası', 'Psixoloji hekayə və videolar!')">📚 Hikmət Kitabxanası</div>
         </div>
         
         <div>
-            <button class="btn btn-alt" onclick="openParentPanel()">👨‍👩‍👧 Valideyn / Admin Paneli</button>
+            <button class="btn btn-alt" onclick="openParentPanel()">👨‍👩‍👧 Valideyn Paneli</button>
             <button class="btn" style="background:#ab47bc;" onclick="openStore()">💎 Premium Mağaza</button>
         </div>
     </div>
 
-    <!-- 4. PARENT & ADMIN PANEL (Valideyn və Admin Hesabatları) -->
+    <!-- EKRAN 4: VALİDEYN PANENİ -->
     <div id="screen-parent" class="screen">
         <div>
-            <h2>👨‍👩‍👧 Valideyn İdarə Paneli</h2>
-            <p>Uşağın həftəlik inkişafı, ekran vaxtı və emosional vəziyyət analitikası:</p>
-            
-            <div class="card">
-                <strong>📊 Emosional Trend:</strong> İmtahan öncəsi yüngül həyəcan, ümumi əhval stabil (Stabil 🟢).
-            </div>
-            <div class="card">
-                <strong>⏳ Gündəlik İstifadə:</strong> 35 dəqiqə (Limit daxilində).
-            </div>
-            <div class="card">
-                <strong>🔒 Təhlükəsizlik Rejimi:</strong> Aktiv (Məhdud Sosial Çat).
-            </div>
+            <h2>👨‍👩‍👧 Valideyn Paneli</h2>
+            <div class="card"><strong>📊 Əhval Trend:</strong> Stabil (🟢 Normal).</div>
+            <div class="card"><strong>⏳ Ekran Vaxtı:</strong> 35 dəqiqə.</div>
+            <div class="card"><strong>🛡️ Nəzarət:</strong> Chat Məhdudiyyəti Aktivdir.</div>
         </div>
-        <button class="btn" onclick="backToIsland()">⬅️ Adaya Qayıt</button>
+        <button class="btn" onclick="backToIsland()">⬅️ Geri</button>
     </div>
 
-    <!-- 5. PREMIUM STORE (Abunəlik və Monetizasiya) -->
+    <!-- EKRAN 5: PREMIUM STORE -->
     <div id="screen-store" class="screen">
         <div>
-            <h2>💎 Ada Premium Abunəlik</h2>
-            <p>Bütün xüsusi zonalar, psixoloq dəstəkli ssenarilər və fərdiləşdirilmiş geyimlər:</p>
-            
-            <div class="card" style="border-color:#ff7043; background:#fff3e0;">
-                <h3>👑 Həftəlik / Aylıq Paket</h3>
-                <p>• Eksklüziv Ada Kostyumları<br>• Dərin Psixoloji Hesabatlar<br>• Reklamsız Təcrübə</p>
-                <strong>Cəmi: 4.99 AZN / ay</strong>
+            <h2>💎 Premium Paket</h2>
+            <div class="card" style="background:#fff3e0; border-color:#ff7043;">
+                <h3>👑 Abunəlik</h3>
+                <p>• Reklamsız Təcrübə<br>• Dərin Psixoloji Analitika<br>• Bütün Personajlar Açılır</p>
+                <strong>4.99 AZN / ay</strong>
             </div>
         </div>
         <div>
-            <button class="btn" onclick="alert('Demo rejimdə ödəniş simulyasiya olundu! Premium aktivləşdi 🎉')">Abunə Ol</button>
-            <button class="btn btn-alt" onclick="backToIsland()">⬅️ Geri qayıt</button>
+            <button class="btn" onclick="alert('Demo Premium Aktivləşdi!')">Abunə Ol</button>
+            <button class="btn btn-alt" onclick="backToIsland()">⬅️ Geri</button>
         </div>
     </div>
 
 </div>
 
-<!-- MODAL / SAFETY POPUP -->
+<!-- SOS MODAL -->
 <div id="safety-modal" class="modal">
     <div class="modal-content">
-        <h3 style="color:#e53935;">🚨 Təcili Dəstək Mərkəzi</h3>
-        <p>Çətin anlar yaşayırsansa, tək deyilsən. Etibarlı böyüklə əlaqə saxlaya və ya qaynar xəttə zəng edə bilərsən.</p>
-        <button class="btn btn-safety" onclick="alert('Valideynə və ya Dəstək Xəttinə SOS siqnalı göndərildi!')">Qaynar Xəttə Bağlan</button>
+        <h3 style="color:#e53935;">🚨 Təcili Dəstək</h3>
+        <p>Hər hansı narahatlıq hiss edirsinizsə, dərhal qaynar xətt və ya valideynlə əlaqə saxlayın.</p>
+        <button class="btn btn-safety" onclick="alert('SOS siqnalı göndərildi!')">Zəng Et</button>
         <button class="btn btn-alt" onclick="closeModal()">Bağla</button>
     </div>
 </div>
 
 <script>
-    let userData = { name: "", age: "", char: "", avatar: "", leaves: 50, xp: 100 };
+    let userData = { name: "", age: "", char: "Panda", avatar: "🐼", leaves: 50, xp: 100 };
 
     function goToCharacter() {
         userData.name = document.getElementById('reg-name').value || "Dostum";
@@ -174,7 +178,7 @@
         document.getElementById('screen-character').classList.add('active');
     }
 
-    function selectChar(name, avatar, specialty) {
+    function selectChar(name, avatar) {
         userData.char = name;
         userData.avatar = avatar;
         document.querySelectorAll('.char-card').forEach(c => c.classList.remove('selected'));
@@ -182,17 +186,16 @@
     }
 
     function startIsland() {
-        if(!userData.char) { userData.char = "Panda"; userData.avatar = "🐼"; }
         document.getElementById('screen-character').classList.remove('active');
         document.getElementById('screen-island').classList.add('active');
         document.getElementById('user-display').innerText = "👤 " + userData.name;
         document.getElementById('active-avatar').innerText = userData.avatar;
         document.getElementById('island-title').innerText = userData.name + " - Adası";
-        document.getElementById('ai-dialogue').innerText = '"Mən sənin bələdçin ' + userData.char + '-yam. Gəlin adamızı böyütməyə başlayaq!"';
+        document.getElementById('ai-dialogue').innerText = '"Mən sənin bələdçin ' + userData.char + '-yam. Gəlin adamızı böyüdək!"';
     }
 
-    function openZone(zoneName, desc) {
-        alert(zoneName + " zonasına daxil oldunuz!\n\nAktivite: " + desc);
+    function openZone(name, desc) {
+        alert(name + " seçildi!\n" + desc);
         userData.leaves += 15;
         userData.xp += 25;
         document.getElementById('leaves').innerText = userData.leaves;
@@ -215,13 +218,8 @@
         document.getElementById('screen-island').classList.add('active');
     }
 
-    function triggerPanicButton() {
-        document.getElementById('safety-modal').style.display = 'flex';
-    }
-
-    function closeModal() {
-        document.getElementById('safety-modal').style.display = 'none';
-    }
+    function triggerPanicButton() { document.getElementById('safety-modal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('safety-modal').style.display = 'none'; }
 </script>
 
 </body>
