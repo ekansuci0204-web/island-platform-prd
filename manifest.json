@@ -1,6 +1,6 @@
 {
-  "name": "Uşaq İnteraktiv Ada",
-  "short_name": "Ada App",
+  "name": "Mindscape",
+  "short_name": "Mindscape",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#e0f7fa",
