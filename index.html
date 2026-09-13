@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mindscape - Oyunlaşdırılmış Psixologiya</title>
     <style>
+        /* OYUNUN ÜMUMİ DİZAYNI */
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         body { overflow: hidden; width: 100vw; height: 100vh; background-color: #a3ccf5; user-select: none; }
 
@@ -48,6 +49,7 @@
         }
         .parent-btn { background: #81c784; color: white; border: 2px solid #2e7d32; cursor: pointer; }
 
+        /* OYUN ADASI VƏ 7 GUŞƏ */
         .island-map-container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; }
         .island-zone {
             position: absolute; background: rgba(255, 255, 255, 0.94); border: 3px solid #ff7a45; border-radius: 18px;
@@ -58,13 +60,13 @@
         .zone-emoji { font-size: 20px; margin-bottom: 2px; }
         .zone-title { font-size: 10px; font-weight: bold; color: #333; }
 
-        #zone-lake { top: 18%; left: 6%; animation-delay: 0s; }
-        #zone-waterfall { top: 15%; right: 6%; animation-delay: 0.3s; border-color: #00bcd4; }
-        #zone-mind { top: 40%; left: 4%; animation-delay: 0.6s; }
-        #zone-garden { bottom: 25%; left: 6%; animation-delay: 0.9s; }
-        #zone-library { bottom: 22%; right: 6%; animation-delay: 1.2s; }
-        #zone-cave { bottom: 42%; right: 4%; animation-delay: 1.5s; border-color: #795548; }
-        #zone-missions { top: 42%; left: 40%; animation-delay: 1.8s; border-color: #2196f3; }
+        #zone-lake { top: 18%; left: 6%; }
+        #zone-waterfall { top: 15%; right: 6%; border-color: #00bcd4; }
+        #zone-mind { top: 40%; left: 4%; }
+        #zone-garden { bottom: 25%; left: 6%; }
+        #zone-library { bottom: 22%; right: 6%; }
+        #zone-cave { bottom: 42%; right: 4%; border-color: #795548; }
+        #zone-missions { top: 42%; left: 40%; border-color: #2196f3; }
 
         .companion-avatar {
             position: absolute; bottom: 35%; left: 42%; font-size: 48px; text-align: center;
@@ -144,7 +146,7 @@
         </div>
     </div>
 
-    <!-- REALLAŞAN DUZGUN GİRİŞ PANETİ -->
+    <!-- REALLAŞAN GİRİŞ FORMASI -->
     <div class="game-box" id="step1">
         <div class="game-box-header">🏝️ Mindscape</div>
         <p class="game-text">Uşaqlar və yeniyetmələr üçün oyunlaşdırılmış psixoloji inkişaf platforması.</p>
@@ -162,3 +164,5 @@
             <div class="companion-card" onclick="selectCompanion(this, 'Panda', '🐼')"><div class="companion-emoji">🐼</div><h4>Panda</h4></div>
             <div class="companion-card" onclick="selectCompanion(this, 'Tülkü', '🦊')"><div class="companion-emoji">🦊</div><h4>Tülkü</h4></div>
             <div class="companion-card" onclick="selectCompanion(this, 'Dovşan', '🐰')"><div class="companion-emoji">🐰</div><h4>Dovşan</h4></div>
+            <div class="companion-card" onclick="selectCompanion(this, 'Ayı', '🐻')"><div class="companion-emoji">🐻</div><h4>Ayı</h4></div>
+        </div>
