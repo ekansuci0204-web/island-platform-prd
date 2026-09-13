@@ -17,6 +17,7 @@
             width: 100vw;
             height: 100vh;
             background-color: #a3ccf5;
+            user-select: none;
         }
 
         /* TAM EKRAN OYUN FONU */
@@ -44,107 +45,148 @@
             padding: 30px 25px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
             text-align: center;
+            z-index: 10;
             animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .game-box-header {
-            font-size: 26px; 
-            font-weight: bold; 
-            color: #2e7d32; 
-            margin-bottom: 15px;
-        }
+        .game-box-header { font-size: 26px; font-weight: bold; color: #2e7d32; margin-bottom: 15px; }
+        .game-text { font-size: 15px; color: #555; margin-bottom: 22px; line-height: 1.5; }
+        .game-label { display: block; text-align: left; font-weight: bold; color: #444; margin-bottom: 8px; font-size: 14px; }
 
-        .game-text { 
-            font-size: 15px; 
-            color: #555; 
-            margin-bottom: 22px; 
-            line-height: 1.5; 
-        }
-
-        .game-label {
-            display: block;
-            text-align: left;
-            font-weight: bold;
-            color: #444;
-            margin-bottom: 8px;
-            font-size: 14px;
-        }
-
-        /* INPUT VƏ SELECT STİLLƏRİ */
         .game-input, .game-select {
-            width: 100%; 
-            padding: 14px; 
-            border-radius: 16px; 
-            border: 2px solid #ccc;
-            margin-bottom: 20px; 
-            font-size: 16px; 
-            outline: none; 
-            transition: 0.2s;
-            background: #f9f9f9;
+            width: 100%; padding: 14px; border-radius: 16px; border: 2px solid #ccc;
+            margin-bottom: 20px; font-size: 16px; outline: none; background: #f9f9f9;
         }
-        .game-input:focus, .game-select:focus { 
-            border-color: #4caf50; 
-            background: #fff;
-        }
+        .game-input:focus, .game-select:focus { border-color: #4caf50; background: #fff; }
 
-        /* OYUN DÜYMƏSİ (BASILMA EFFEKTLİ) */
         .game-btn {
-            width: 100%; 
-            padding: 16px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            color: white;
+            width: 100%; padding: 16px; font-size: 18px; font-weight: bold; color: white;
             background: linear-gradient(135deg, #ff7a45, #de541e);
-            border: none; 
-            border-radius: 18px; 
-            cursor: pointer; 
-            box-shadow: 0 6px 0 #b33c0d;
+            border: none; border-radius: 18px; cursor: pointer; box-shadow: 0 6px 0 #b33c0d;
             transition: 0.1s;
         }
-        .game-btn:active { 
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 #b33c0d; 
-        }
+        .game-btn:active { transform: translateY(4px); box-shadow: 0 2px 0 #b33c0d; }
 
-        /* VİRTUAL YOLDAŞ SEÇİMİ (GRID) */
-        .companion-grid { 
-            display: grid; 
-            grid-template-columns: 1fr 1fr; 
-            gap: 12px; 
-            margin-bottom: 22px; 
-        }
-
-        .companion-card {
-            background: white; 
-            border: 2px solid #e0e0e0; 
-            border-radius: 20px; 
-            padding: 15px 10px; 
-            cursor: pointer; 
-            transition: 0.2s ease;
-        }
+        .companion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+        .companion-card { background: white; border: 2px solid #e0e0e0; border-radius: 20px; padding: 15px 10px; cursor: pointer; transition: 0.2s ease; }
         .companion-card:hover { transform: scale(1.04); }
         .companion-emoji { font-size: 36px; margin-bottom: 5px; }
         .companion-card h4 { font-size: 16px; color: #333; margin-bottom: 4px; }
         .companion-card p { font-size: 11px; color: #777; }
+        .companion-card.selected { border-color: #ff7a45; background: #fff5f0; box-shadow: 0 0 12px rgba(255, 122, 69, 0.4); }
 
-        .companion-card.selected { 
-            border-color: #ff7a45; 
-            background: #fff5f0; 
-            box-shadow: 0 0 12px rgba(255, 122, 69, 0.4);
+        /* REAL OYUN HUD (YUXARI PANEL - STATUS BAR) */
+        .game-hud {
+            position: fixed;
+            top: 15px; left: 50%;
+            transform: translateX(-50%);
+            width: 95%; max-width: 500px;
+            display: flex; justify-content: space-between; gap: 8px;
+            z-index: 5;
+        }
+        .hud-item {
+            background: rgba(255, 255, 255, 0.95);
+            border: 2px solid #4caf50; border-radius: 50px;
+            padding: 8px 12px; font-weight: bold; font-size: 12px;
+            display: flex; align-items: center; gap: 5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            color: #2e7d32;
         }
 
+        /* İNTERAKTİV ADA XƏRİTƏSİ VƏ ZONALAR */
+        .island-map-container {
+            position: relative;
+            width: 100vw; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* Adadakı kliklənən zonalar (Hotspots) */
+        .island-zone {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.92);
+            border: 3px solid #ff7a45; border-radius: 20px;
+            padding: 10px 15px; text-align: center; cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+            animation: floatAnimation 3s ease-in-out infinite;
+            z-index: 4;
+        }
+        .island-zone:active { transform: scale(0.95); }
+        .zone-emoji { font-size: 24px; margin-bottom: 3px; }
+        .zone-title { font-size: 12px; font-weight: bold; color: #333; }
+
+        /* Zonaların Ada Üzərindəki Koordinatları */
+        #zone-lake { top: 22%; left: 10%; animation-delay: 0s; }
+        #zone-mind { top: 20%; right: 10%; animation-delay: 0.5s; }
+        #zone-garden { bottom: 25%; left: 12%; animation-delay: 1s; }
+        #zone-library { bottom: 22%; right: 12%; animation-delay: 1.5s; }
+
+        /* BƏLƏDÇİ DOSTUN ADA ÜZƏRİNDƏKİ VİZUALI */
+        .companion-avatar {
+            position: absolute;
+            bottom: 40%; left: 42%;
+            font-size: 55px; text-align: center;
+            animation: companionFloat 2.5s ease-in-out infinite;
+            cursor: pointer; z-index: 4;
+        }
+        .companion-bubble {
+            position: absolute; top: -45px; left: 50%; transform: translateX(-50%);
+            background: white; padding: 6px 12px; border-radius: 12px;
+            font-size: 11px; font-weight: bold; white-space: nowrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            border: 2px solid #ccc;
+            color: #333;
+        }
+
+        /* ANİMASİYALAR */
         .hidden { display: none !important; }
-
-        @keyframes popIn { 
-            from { transform: translate(-50%, -45%) scale(0.85); opacity: 0; } 
-            to { transform: translate(-50%, -50%) scale(1); opacity: 1; } 
-        }
+        @keyframes popIn { from { transform: translate(-50%, -45%) scale(0.85); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
+        @keyframes floatAnimation { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        @keyframes companionFloat { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-6px) scale(1.05); } }
     </style>
 </head>
 <body>
 
     <!-- OYUNUN ARXA FONU -->
     <div class="game-background"></div>
+
+    <!-- OYUNUN HUD (YUXARI PANELİ - İLK BAŞDA GİZLİDİR) -->
+    <div class="game-hud hidden" id="gameHud">
+        <div class="hud-item" id="hudName">👤 Uşaq: -</div>
+        <div class="hud-item">🍃 50 Yarpaq</div>
+        <div class="hud-item">⭐ 100 XP</div>
+    </div>
+
+    <!-- İNTERAKTİV ADA XƏRİTƏSİ (İLK BAŞDA GİZLİDİR) -->
+    <div class="island-map-container hidden" id="islandMap">
+        
+        <!-- Virtual Yoldaşın Canlı Avatarı -->
+        <div class="companion-avatar" id="islandCompanion" onclick="talkToCompanion()">
+            <div class="companion-bubble" id="companionText">Məni kliklə!</div>
+            <span id="companionEmoji">🐼</span>
+        </div>
+
+        <!-- Zonalar (Kliklənən Oyun Sahələri) -->
+        <div class="island-zone" id="zone-lake" onclick="openZone('Sakitlik Gölü (Nəfəs Oyunu)')">
+            <div class="zone-emoji">🌊</div>
+            <div class="zone-title">Sakitlik Gölü</div>
+        </div>
+
+        <div class="island-zone" id="zone-mind" onclick="openZone('İdrak & Diqqət Zonası')">
+            <div class="zone-emoji">⛰️</div>
+            <div class="zone-title">İdrak Zonası</div>
+        </div>
+
+        <div class="island-zone" id="zone-garden" onclick="openZone('Empatiya Bağı')">
+            <div class="zone-emoji">🌸</div>
+            <div class="zone-title">Empatiya Bağı</div>
+        </div>
+
+        <div class="island-zone" id="zone-library" onclick="openZone('Hikmət Kitabxanası')">
+            <div class="zone-emoji">📚</div>
+            <div class="zone-title">Kitabxana</div>
+        </div>
+    </div>
 
     <!-- OYUNUN GİRİŞ PƏNCƏRƏSİ: AD VƏ YAŞ (ADDIM 1) -->
     <div class="game-box" id="step1">
@@ -162,64 +204,31 @@
         <button class="game-btn" onclick="goToStep2()">Davam Et ➔</button>
     </div>
 
-    <!-- VİRTUAL YOLDAŞ SEÇİMİ (ADDIM 2 - İLK BAŞDA GİZLİDİR) -->
+    <!-- VİRTUAL YOLDAŞ SEÇİMİ (ADDIM 2) -->
     <div class="game-box hidden" id="step2">
         <div class="game-box-header">🦊 Bələdçini Seç</div>
         <p class="game-text">Adada sənə yoldaşlıq edəcək dostunu seç:</p>
         
         <div class="companion-grid">
-            <div class="companion-card" onclick="selectCompanion(this, 'Panda')">
+            <div class="companion-card" onclick="selectCompanion(this, 'Panda', '🐼')">
                 <div class="companion-emoji">🐼</div>
                 <h4>Panda</h4>
                 <p>Nəfəs & Sakitlik</p>
             </div>
-            <div class="companion-card" onclick="selectCompanion(this, 'Tülkü')">
+            <div class="companion-card" onclick="selectCompanion(this, 'Tülkü', '🦊')">
                 <div class="companion-emoji">🦊</div>
                 <h4>Tülkü</h4>
                 <p>İdrak & Diqqət</p>
             </div>
-            <div class="companion-card" onclick="selectCompanion(this, 'Dovşan')">
+            <div class="companion-card" onclick="selectCompanion(this, 'Dovşan', '🐰')">
                 <div class="companion-emoji">🐰</div>
                 <h4>Dovşan</h4>
                 <p>Emosiyalar & Şən</p>
             </div>
-            <div class="companion-card" onclick="selectCompanion(this, 'Ayı')">
+            <div class="companion-card" onclick="selectCompanion(this, 'Ayı', '🐻')">
                 <div class="companion-emoji">🐻</div>
                 <h4>Ayı</h4>
                 <p>Cəsarət & Qoruyucu</p>
             </div>
         </div>
 
-        <button class="game-btn" onclick="enterIsland()">Adaya Daxil Ol 🌱</button>
-    </div>
-
-    <script>
-        let chosenCompanion = "";
-
-        function goToStep2() {
-            let name = document.getElementById('username').value.trim();
-            if(!name) { 
-                alert('Zəhmət olmasa adınızı yazın!'); 
-                return; 
-            }
-            document.getElementById('step1').classList.add('hidden');
-            document.getElementById('step2').classList.remove('hidden');
-        }
-
-        function selectCompanion(element, name) {
-            document.querySelectorAll('.companion-card').forEach(c => c.classList.remove('selected'));
-            element.classList.add('selected');
-            chosenCompanion = name;
-        }
-
-        function enterIsland() {
-            if(!chosenCompanion) {
-                alert('Zəhmət olmasa bir bələdçi seçin!');
-                return;
-            }
-            let name = document.getElementById('username').value;
-            alert(`Uğurlu keçid! Xoş gəldin ${name}. ${chosenCompanion} səni adada gözləyir!`);
-        }
-    </script>
-</body>
-</html>
