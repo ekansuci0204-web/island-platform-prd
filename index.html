@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mindscape - Oyunlaşdırılmış Psixologiya Platforması</title>
+    <title>Mindscape - Oyunlaşdırılmış Psixologiya</title>
     <style>
         * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; }
         body { overflow: hidden; width: 100vw; height: 100vh; background-color: #a3ccf5; user-select: none; }
@@ -55,17 +55,19 @@
             animation: floatAnimation 3s ease-in-out infinite; z-index: 4; transition: 0.2s;
         }
         .island-zone:active { transform: scale(0.95); }
-        .zone-emoji { font-size: 22px; margin-bottom: 2px; }
-        .zone-title { font-size: 11px; font-weight: bold; color: #333; }
+        .zone-emoji { font-size: 20px; margin-bottom: 2px; }
+        .zone-title { font-size: 10px; font-weight: bold; color: #333; }
 
-        #zone-lake { top: 20%; left: 8%; animation-delay: 0s; }
-        #zone-mind { top: 18%; right: 8%; animation-delay: 0.4s; }
-        #zone-garden { bottom: 22%; left: 8%; animation-delay: 0.8s; }
-        #zone-library { bottom: 20%; right: 8%; animation-delay: 1.2s; }
-        #zone-missions { top: 45%; left: 6%; animation-delay: 1.6s; border-color: #2196f3; }
+        #zone-lake { top: 18%; left: 6%; animation-delay: 0s; }
+        #zone-waterfall { top: 15%; right: 6%; animation-delay: 0.3s; border-color: #00bcd4; }
+        #zone-mind { top: 40%; left: 4%; animation-delay: 0.6s; }
+        #zone-garden { bottom: 25%; left: 6%; animation-delay: 0.9s; }
+        #zone-library { bottom: 22%; right: 6%; animation-delay: 1.2s; }
+        #zone-cave { bottom: 42%; right: 4%; animation-delay: 1.5s; border-color: #795548; }
+        #zone-missions { top: 42%; left: 40%; animation-delay: 1.8s; border-color: #2196f3; }
 
         .companion-avatar {
-            position: absolute; bottom: 38%; left: 42%; font-size: 50px; text-align: center;
+            position: absolute; bottom: 35%; left: 42%; font-size: 48px; text-align: center;
             animation: companionFloat 2.5s ease-in-out infinite; cursor: pointer; z-index: 4;
         }
         .companion-bubble {
@@ -80,14 +82,14 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px;
         }
         .breath-circle {
-            width: 140px; height: 140px; background: radial-gradient(circle, #64b5f6, #1e88e5);
+            width: 130px; height: 130px; background: radial-gradient(circle, #64b5f6, #1e88e5);
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             color: white; font-weight: bold; font-size: 18px; box-shadow: 0 0 25px rgba(30,136,229,0.4);
             transition: transform 4s linear;
         }
-        .breath-circle.inhale { transform: scale(1.6); }
+        .breath-circle.inhale { transform: scale(1.5); }
         .breath-circle.exhale { transform: scale(1); }
-        .breath-instruction { font-size: 22px; font-weight: bold; color: #1e88e5; margin-top: 25px; text-align: center; }
+        .breath-instruction { font-size: 20px; font-weight: bold; color: #1e88e5; margin-top: 25px; text-align: center; }
 
         .option-btn {
             width: 100%; padding: 12px; margin-bottom: 8px; font-size: 14px; background: #f5f5f5;
@@ -122,6 +124,9 @@
         <div class="island-zone" id="zone-lake" onclick="startBreathGame()">
             <div class="zone-emoji">🌊</div><div class="zone-title">Sakitlik Gölü</div>
         </div>
+        <div class="island-zone" id="zone-waterfall" onclick="alert('Sakitlik Şəlaləsi: Səs terapiyası tezliklə aktivləşəcək!')">
+            <div class="zone-emoji">🏞️</div><div class="zone-title">Sakitlik Şəlaləsi</div>
+        </div>
         <div class="island-zone" id="zone-mind" onclick="openMoodCheck()">
             <div class="zone-emoji">⛰️</div><div class="zone-title">İdrak Zonası</div>
         </div>
@@ -131,15 +136,19 @@
         <div class="island-zone" id="zone-library" onclick="openVideoZone()">
             <div class="zone-emoji">📚</div><div class="zone-title">Kitabxana</div>
         </div>
+        <div class="island-zone" id="zone-cave" onclick="alert('Cəsarət Mağarası: Qorxularla mübarizə missiyaları çox yaxında!')">
+            <div class="zone-emoji">🪨</div><div class="zone-title">Cəsarət Mağarası</div>
+        </div>
         <div class="island-zone" id="zone-missions" onclick="openDailyMissions()">
             <div class="zone-emoji">🎯</div><div class="zone-title">Missiyalar</div>
         </div>
     </div>
 
+    <!-- REALLAŞAN DUZGUN GİRİŞ PANETİ -->
     <div class="game-box" id="step1">
-        <div class="game-box-header">🏝️ Mindscape Pro</div>
-        <p class="game-text">Uşaq və yeniyetmələr üçün oyunlaşdırılmış psixoloji inkişaf platforması.</p>
-        <input type="text" id="username" class="game-input" placeholder="İstifadəçi adı və ya ləqəb...">
+        <div class="game-box-header">🏝️ Mindscape</div>
+        <p class="game-text">Uşaqlar və yeniyetmələr üçün oyunlaşdırılmış psixoloji inkişaf platforması.</p>
+        <input type="text" id="username" class="game-input" placeholder="Ləqəb və ya adınız...">
         <select id="ageGroup" class="game-select">
             <option value="8-12">8 - 12 Yaş (Uşaq Paneli)</option>
             <option value="13-18">13 - 18 Yaş (Yeniyetmə Paneli)</option>
@@ -149,20 +158,7 @@
 
     <div class="game-box hidden" id="step2">
         <div class="game-box-header">🐼 Virtual Yoldaşını Seç</div>
-        <p class="game-text">Sənə diaqnoz qoymayacaq, sadəcə dost olacaq guide:</p>
         <div class="companion-grid">
             <div class="companion-card" onclick="selectCompanion(this, 'Panda', '🐼')"><div class="companion-emoji">🐼</div><h4>Panda</h4></div>
             <div class="companion-card" onclick="selectCompanion(this, 'Tülkü', '🦊')"><div class="companion-emoji">🦊</div><h4>Tülkü</h4></div>
             <div class="companion-card" onclick="selectCompanion(this, 'Dovşan', '🐰')"><div class="companion-emoji">🐰</div><h4>Dovşan</h4></div>
-            <div class="companion-card" onclick="selectCompanion(this, 'Ayı', '🐻')"><div class="companion-emoji">🐻</div><h4>Ayı</h4></div>
-        </div>
-        <button class="game-btn" onclick="enterIsland()">Adaya Daxil Ol 🌱</button>
-    </div>
-
-    <div class="game-overlay hidden" id="breathGame">
-        <div class="breath-circle" id="breathCircle">🧘</div>
-        <div class="breath-instruction" id="breathText">Hazırsan?</div>
-        <button class="game-btn" style="max-width:200px; margin-top:30px; background:#e53935; box-shadow:0 5px 0 #b71c1c;" onclick="closeBreathGame()">Məşqi Bitir ✖️</button>
-    </div>
-
-    <div class="game-overlay hidden" id="moodZone">
