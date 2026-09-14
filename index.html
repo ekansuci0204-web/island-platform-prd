@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="az">
 <head>
     <meta charset="UTF-8">
@@ -26,10 +26,6 @@
             background: linear-gradient(135deg, #ff7a45, #de541e); border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 4px 0 #b33c0d;
         }
         .game-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #b33c0d; }
-
-        /* MULTİ-SƏHİFƏ SİSTEMİ PANƏLLƏRİ */
-        .page-panel { display: none; width: 100%; height: 100%; }
-        .active-panel { display: block !important; }
 
         .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
         .mood-card { background: #f9f9f9; border: 2px solid #ddd; border-radius: 14px; padding: 12px; cursor: pointer; }
@@ -78,7 +74,6 @@
 
     <div class="game-background"></div>
 
-    <!-- HUD STRIP -->
     <div class="game-hud" id="gameHud" style="display: none !important;">
         <div class="hud-item" id="hudName">👤 Uşaq: -</div>
         <div class="hud-item">🍃 <span id="hudLeaves">50</span> Yarpaq</div>
@@ -139,12 +134,9 @@
         let playerName = ""; let chosenCompanion = ""; let companionEmoji = "🐼"; let chosenMood = "";
 
         function goToStep2() {
-            // 🚨 KLAVİATURANI MƏCBURİ BAĞLAMAQ FUNKSİYASI (DONMANIN QƏTİ HƏLLİ)
             document.getElementById('username').blur(); 
-            
             playerName = document.getElementById('username').value.trim();
             if(!playerName) { alert('Zəhmət olmasa adınızı yazın!'); return; }
-            
             document.getElementById('step1').style.setProperty('display', 'none', 'important');
             document.getElementById('step2').style.setProperty('display', 'block', 'important');
         }
@@ -171,3 +163,7 @@
             if(!chosenMood) { alert('Zəhmət olmasa bugünkü əhvalınızı seçin!'); return; }
             document.getElementById('step3').style.setProperty('display', 'none', 'important');
             
+            document.getElementById('gameHud').style.setProperty('display', 'flex', 'important');
+            document.getElementById('islandMap').style.setProperty('display', 'flex', 'important');
+            
+            document.getElementById('hudName').innerText = `👤 ${playerName}`;
