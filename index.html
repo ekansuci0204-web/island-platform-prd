@@ -13,38 +13,13 @@
             background: linear-gradient(to bottom, #87ceeb, #a3ccf5); z-index: -2;
         }
 
-        /* TIPİK OYUN PANƏLİ */
-        .game-box {
-            background: rgba(255, 255, 255, 0.98); border: 4px solid #4caf50; border-radius: 24px; padding: 22px;
-            width: 90%; max-width: 380px; text-align: center; box-shadow: 0 12px 30px rgba(0,0,0,0.25); z-index: 10;
-        }
-        .game-title { font-size: 26px; font-weight: bold; color: #2e7d32; margin-bottom: 10px; }
-        .game-text { font-size: 13px; color: #666; margin-bottom: 15px; }
-        .game-input { width: 100%; padding: 12px; border-radius: 14px; border: 2px solid #ccc; margin-bottom: 12px; font-size: 16px; outline: none; background: #f9f9f9; }
-        
-        .game-btn {
-            width: 100%; padding: 14px; font-size: 16px; font-weight: bold; color: white;
-            background: linear-gradient(135deg, #ff7a45, #de541e); border: none; border-radius: 14px; cursor: pointer; box-shadow: 0 4px 0 #b33c0d;
-        }
-        .game-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #b33c0d; }
-
-        .mood-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-        .mood-card { background: #f9f9f9; border: 2px solid #ddd; border-radius: 14px; padding: 12px; cursor: pointer; }
-        .mood-card.active { border-color: #ff7a45; background: #fff5f0; }
-        .mood-emoji { font-size: 32px; margin-bottom: 3px; }
-
-        .companion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-        .companion-card { background: white; border: 2px solid #e0e0e0; border-radius: 14px; padding: 10px; cursor: pointer; }
-        .companion-card.active { border-color: #ff7a45; background: #fff5f0; }
-        .companion-emoji { font-size: 28px; }
-
         /* 🌴 SƏNİN DEDİYİN ƏSL VİZUAL OYUN ADASI QURULUŞU */
-        .island-container { position: relative; width: 100vw; height: 100vh; display: none; justify-content: center; align-items: center; background-image: url('https://unsplash.com'); background-size: cover; background-position: center; }
+        .island-container { position: relative; width: 100vw; height: 100vh; display: flex; justify-content: center; align-items: center; background-image: url('https://unsplash.com'); background-size: cover; background-position: center; }
         
         /* HUD STRIP */
         .game-hud {
             position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
-            width: 92%; max-width: 480px; display: none; justify-content: space-between; z-index: 100;
+            width: 92%; max-width: 480px; display: flex; justify-content: space-between; z-index: 100;
         }
         .hud-item { background: rgba(255, 255, 255, 0.95); border: 2px solid #4caf50; border-radius: 50px; padding: 6px 12px; font-weight: bold; font-size: 11px; color: #2e7d32; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
 
@@ -78,48 +53,17 @@
 
     <div class="game-background"></div>
 
+    <!-- HUD PANELİ (DƏRHAL AKTİVDİR) -->
     <div class="game-hud" id="gameHud">
-        <div class="hud-item" id="hudName">👤 Uşaq: -</div>
+        <div class="hud-item">👤 Uşaq: Mindscape_User</div>
         <div class="hud-item">🍃 <span id="hudLeaves">50</span> Yarpaq</div>
         <div class="hud-item">⭐ <span id="hudXp">100</span> XP</div>
     </div>
 
-    <!-- SƏHİFƏ 1: GİRİŞ -->
-    <div class="game-box" id="step1">
-        <div class="game-title">🏝️ Mindscape</div>
-        <p class="game-text">İlk olaraq adınızı qeyd edin.</p>
-        <input type="text" id="username" class="game-input" placeholder="Ləqəb və ya adınız...">
-        <button class="game-btn" type="button" onclick="goToStep2()">Davam Et ➔</button>
-    </div>
-
-    <!-- SƏHİFƏ 2: HEYVAN SEÇİMİ -->
-    <div class="game-box" id="step2" style="display: none;">
-        <div class="game-title">🐼 Bələdçini Seç</div>
-        <div class="companion-grid">
-            <div class="companion-card" id="c1" onclick="selectCompanion('c1', 'Panda', '🐼')"><div class="companion-emoji">🐼</div><h4>Panda</h4></div>
-            <div class="companion-card" id="c2" onclick="selectCompanion('c2', 'Tülkü', '🦊')"><div class="companion-emoji">🦊</div><h4>Tülkü</h4></div>
-            <div class="companion-card" id="c3" onclick="selectCompanion('c3', 'Tısbağa', '🐢')"><div class="companion-emoji">🐢</div><h4>Tısbağa</h4></div>
-        </div>
-        <button class="game-btn" type="button" onclick="goToStep3()">İrəli ➔</button>
-    </div>
-
-    <!-- SƏHİFƏ 3: EMOSİYA SEÇİMİ (CHECK-IN) -->
-    <div class="game-box" id="step3" style="display: none;">
-        <div class="game-title">⛰️ Özünü Necə Hiss Edirsən?</div>
-        <p class="game-text">Bu gün adaya girmədən öncə emosiyanı qeyd et:</p>
-        <div class="mood-grid">
-            <div class="mood-card" id="m1" onclick="selectMood('m1', '☀️ Enerjili')"><div class="mood-emoji">☀️</div><h4>Şad / Enerjili</h4></div>
-            <div class="mood-card" id="m2" onclick="selectMood('m2', '🍃 Sakit')"><div class="mood-emoji">🍃</div><h4>Sakit / Rahat</h4></div>
-            <div class="mood-card" id="m3" onclick="selectMood('m3', '☁️ Yorğun')"><div class="mood-emoji">☁️</div><h4>Yorğun / Fikirli</h4></div>
-            <div class="mood-card" id="m4" onclick="selectMood('m4', '🔥 Qəzəbli')"><div class="mood-emoji">🔥</div><h4>Gərgin / Əsəbi</h4></div>
-        </div>
-        <button class="game-btn" type="button" onclick="enterVisualIsland()">Adaya Daxil Ol 🌱</button>
-    </div>
-
-    <!-- SƏHİFƏ 4: ƏSL VİZUAL OYUN ADASI -->
+    <!-- SƏHİFƏ 4: ƏSL VİZUAL OYUN ADASI (BİRBAŞA AÇILIR) -->
     <div class="island-container" id="islandMap">
         <div class="hero-character" onclick="talkToHero()">
-            <div class="hero-bubble" id="heroText">Adanı böyüdək!</div>
+            <div class="hero-bubble" id="heroText">Salam! Gəl adanı böyüdək!</div>
             <span id="heroEmoji">🐼</span>
         </div>
 
@@ -135,42 +79,10 @@
     </div>
 
     <script>
-        let playerName = ""; let chosenCompanion = ""; let companionEmoji = "🐼"; let chosenMood = "";
-
-        function goToStep2() {
-            // Klaviaturanı dərhal bağlayırıq ki, mobil ekranda kod ilişməsin
-            document.getElementById('username').blur(); 
-            
-            playerName = document.getElementById('username').value.trim();
-            if(!playerName) { alert('Zəhmət olmasa adınızı yazın!'); return; }
-            
-            document.getElementById('step1').style.display = 'none';
-            document.getElementById('step2').style.display = 'block';
+        function talkToHero() {
+            let phrases = ["Bu gün möhtəşəm görünürsən!", "Gölə klikləyib oyun oynayaq?", "Missiyaları tamamlayaq?"];
+            document.getElementById('heroText').innerText = phrases[Math.floor(Math.random() * phrases.length)];
         }
-
-        function selectCompanion(id, name, emoji) {
-            document.querySelectorAll('.companion-card').forEach(c => c.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            chosenCompanion = name; companionEmoji = emoji;
-        }
-
-        function goToStep3() {
-            if(!chosenCompanion) { alert('Zəhmət olmasa bələdçini seçin!'); return; }
-            document.getElementById('step2').style.display = 'none';
-            document.getElementById('step3').style.display = 'block';
-        }
-
-        function selectMood(id, mood) {
-            document.querySelectorAll('.mood-card').forEach(m => m.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            chosenMood = mood;
-        }
-
-        function enterVisualIsland() {
-            if(!chosenMood) { alert('Zəhmət olmasa bugünkü əhvalınızı seçin!'); return; }
-            document.getElementById('step3').style.display = 'none';
-            
-            document.getElementById('gameHud').style.display = 'flex';
-            document.getElementById('islandMap').style.display = 'flex';
-            
-            document.getElementById('hudName').innerText = `👤 ${playerName}`;
+    </script>
+</body>
+</html>
